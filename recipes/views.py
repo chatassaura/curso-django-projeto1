@@ -8,8 +8,8 @@ def home(request):
 
 
 def sobre(request):
-    return render(request, 'me-apague/temp.html')  # Implementação da view
+    return render(request, 'recipes/sobre.html')  # Implementação da view
 
 
 def contato(request):
-    return HttpResponse('CONTATO')  # Implementação da view
+    return render(request, 'recipes/contato.html')  # Implementação da view
