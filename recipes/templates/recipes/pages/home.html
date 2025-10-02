@@ -1,18 +1,11 @@
-{% include 'recipes/partials/head.html' %}
+{% extends 'global/base.html' %}
 
-<body>
-    {% include 'recipes/partials/header.html' %}
+{% block title%} Home |{% endblock title%}
 
-    <div class="search-container">
-        <div class="container">
-            <form action="" class="search-form">
-                <input type="search" class="search-input" placeholder="Search for a recipe..." name="q"
-                    id="search-input">
-                <button type="submit" class="search-button"><i class=" fas fa-search"></i></button>
-            </form>
-        </div>
-    </div>
-
-</body>
-
-</html>
+{% block content %}
+<div class="main-content main-content-list container ">
+    {% for recipe in recipes %}
+        {% include 'recipes/partials/recipe.html' %}
+    {% endfor %}
+</div>
+{% endblock content %}

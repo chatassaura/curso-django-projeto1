@@ -21,3 +21,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('recipes.urls')),  # Inclui as URLs do app recipes
 ]
+ 
