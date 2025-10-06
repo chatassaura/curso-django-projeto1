@@ -1,32 +1,47 @@
 <div class="recipe recipe-list-item">
-    <div class="recipe-cover">
-        {% comment %} <img src="https://placehold.co/1280x720/269fe6/000000/png" alt="Temporário"> {% endcomment %}
-        <a href="{% url 'recipes:recipe' recipe.id %}">
-            <img src="{{ recipe.cover.url }}" alt="Temporário">
-        </a>
-    </div>
+    {% if recipe.cover %}
+        <div class="recipe-cover">
+            {% comment %} <img src="https://placehold.co/1280x720/269fe6/000000/png" alt="Temporário"> {% endcomment %}
+            <a href="{% url 'recipes:recipe' recipe.id %}">
+                <img src="{{ recipe.cover.url }}" alt="Temporário">
+            </a>
+        </div>
+    {% endif %}
     <div class="recipe-title-container">
         <a href="{% url 'recipes:recipe' recipe.id %}">
             <h2 class="recipe-title">{{recipe.title}}</h2>
         </a>
     </div>
     <div class="recipe-author">
-        <span class="recipe-author-item">
-            <i class="fas fa-user"></i>
-            {{recipe.author.first_name}} {{recipe.author.last_name}}
-        </span>
+        
+            <span class="recipe-author-item">
+                <i class="fas fa-user"></i>
+                {% if recipe.author is not None %}
+                    {% if recipe.author.first_name %}
+                        {{recipe.author.first_name}} {{recipe.author.last_name}}
+                    {% else %}
+                        {{recipe.author.username}}
+                    {% endif %}
+                {% else %}
+                    Desconhecido
+                {% endif %}
+            </span>
+        
+
         <span class="recipe-author-item">
             <i class="fas fa-calendar-alt"></i>
-            {{recipe.create_at|date:"d/m/Y"}}
+            {{recipe.created_at|date:"d/m/Y H:m"}}
         </span>
-        <span class="recipe-author-item">
-            <a href="">
-                <i class="fas fa-layer-group"></i>
-                <span>
-                    {{recipe.category.name}}
-                </span>
-            </a>
-        </span>
+        {% if recipe.category is not None%}
+            <span class="recipe-author-item">
+                <a href="{% url 'recipes:category' recipe.category.id %}">
+                    <i class="fas fa-layer-group"></i>
+                    <span>
+                        {{recipe.category.name}}
+                    </span>
+                </a>
+            </span>
+        {% endif %}
     </div>
     <div class="recipe-content">
         <p>
@@ -64,8 +79,12 @@
     {% endif %}
 
     {% if is_detail_page is True%}
-        <div class="preparetion-steps">
-            {{recipe.preparation_steps|linebreaks}}
+        <div class="preparation-steps">
+            {% if recipe.preparation_steps_is_html is True %}
+                {{recipe.preparation_steps|safe}}
+            {% else %}
+                {{recipe.preparation_steps|linebreaks}}
+            {% endif %}
         </div>
     {% endif %}
 </div>

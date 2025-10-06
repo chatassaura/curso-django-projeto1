@@ -1,12 +1,18 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path
-from django.conf.urls.static import static  
-from django.conf import settings   
+
 from recipes import views
 
 app_name = 'recipes'
 
 urlpatterns = [
     path('', views.home, name="home"),  # Home
+    path(
+        'recipes/category/<int:category_id>',
+        views.category,
+        name="category"
+    ),  # Category
     path('recipes/<int:id>', views.recipe, name="recipe"),  # Recipe
 ]
 
