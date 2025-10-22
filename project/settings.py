@@ -29,10 +29,12 @@ SECRET_KEY = (
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if os.environ.get('DEBUG') == '1' else False
 
-ALLOWED_HOSTS: list[str] = [
-    '127.0.0.1',
-    'localhost',
-]
+# ALLOWED_HOSTS: list[str] = [
+#     '127.0.0.1',
+#     'localhost',
+# ]
+
+ALLOWED_HOSTS: list[str] = []
 
 # Application definition
 
@@ -68,6 +70,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -136,7 +139,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'base_static'
  ]
