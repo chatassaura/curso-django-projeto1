@@ -1,3 +1,4 @@
+# noqa: E501
 import time
 from unittest.mock import patch
 
@@ -50,11 +51,12 @@ class AuthorsBaseTest(StaticLiveServerTestCase):
         # Verifica se time.sleep foi chamado com o valor customizado
         mock_time_sleep.assert_called_once_with(custom_seconds)
 
-    # 3. Testar se a função não foi chamada quando não deveria (Exemplo Negativo)
+    # 3. Testar se a função não foi chamada quando não deveria
+    # (Exemplo Negativo)
     @patch('time.sleep')
     def test_sleep_is_not_called_outside_of_method_execution(self, mock_time_sleep):
         # Arrange
-        base_test = AuthorsBaseTest()
+        # base_test = AuthorsBaseTest()
         # Act/Assert: Nenhuma chamada a base_test.sleep() é feita
         # Assert
         # Verifica se time.sleep não foi chamado
