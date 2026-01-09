@@ -9,7 +9,15 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
-    ...
+    list_display = ['id', 'title', 'author', 'is_published']
+    list_display_links = 'id', 'title',
+    search_fields = 'id', 'title', 'description', 'slug', 'preparation_steps',
+    list_filter = 'is_published', 'author', 'is_published', \
+        'preparation_steps_is_html',
+    list_per_page = 10
+    list_editable = 'is_published',
+    ordering = '-id',
+    prepopulated_fields = {'slug': ('title',)}
 
 
 admin.site.register(Category, CategoryAdmin)

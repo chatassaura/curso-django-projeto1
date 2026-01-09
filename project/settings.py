@@ -14,6 +14,9 @@ import os
 from pathlib import Path
 
 from django.contrib.messages import constants
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,7 +37,7 @@ DEBUG = True if os.environ.get('DEBUG') == '1' else False
 #     'localhost',
 # ]
 
-ALLOWED_HOSTS: list[str] = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
