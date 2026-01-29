@@ -13,6 +13,12 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 
+from utils.environment import get_env_variable, parse_comma_sep_str_to_list
+
+if os.environ.get('DEBUG', None) is None:
+    from dotenv import load_dotenv
+    load_dotenv()
+
 from django.contrib.messages import constants
 from dotenv import load_dotenv
 
@@ -37,7 +43,12 @@ DEBUG = True if os.environ.get('DEBUG') == '1' else False
 #     'localhost',
 # ]
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS: list[str] = parse_comma_sep_str_to_list(
+    get_env_variable('ALLOWED_HOST')
+)
+CSRF_TRUSTED_ORIGINS: list[str] = parse_comma_sep_str_to_list(
+    get_env_variable('CSRF_TRUSTED_ORIGINS')
+)
 
 # Application definition
 
@@ -48,12 +59,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'debug_toolbar',
     'recipes',
     'authors',
+    'tag',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -163,3 +177,8 @@ MESSAGE_TAGS = {
     constants.WARNING: 'message-warning',
     constants.ERROR: 'message-danger',
 }
+
+# Django Debug Toolbar
+INTERNAL_IPS = [
+    "127.0.0.1"
+]
